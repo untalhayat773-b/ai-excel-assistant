@@ -7,69 +7,65 @@ st.set_page_config(
 
 st.title("📊 AI Excel Formula & Assistant Tool")
 st.write(
-    "Apna Excel ka masla ya sawal likhein, aur foran exact formula aur tarika"
-    " hasil karein!"
+    "Type your Excel problem or requirement below, and get the exact formula"
+    " and professional solution instantly!"
 )
 
 # User Input
 user_query = st.text_area(
-    "Aapko Excel mein kya karna hai? (Misal ke taur par: 'Mujhe VLOOKUP ka formula batao')",
+    "What do you want to do in Excel?",
     placeholder=(
-        "Find duplicate values in column A and highlight them, or write a"
+        "e.g., Find duplicate values in column A and highlight them, or write a"
         " formula for total sales..."
     ),
 )
 
 if st.button("Generate Excel Solution 🚀"):
   if not user_query:
-    st.warning("Barah-e-karam apna sawal ya requirement zaroor likhein!")
+    st.warning("Please enter your Excel question or requirement first!")
   else:
-    with st.spinner("Excel expert formula tayar kar raha hai..."):
+    with st.spinner("AI Excel expert is generating your solution..."):
       try:
-        # Smart automated formula and response generator logic
         query_lower = user_query.lower()
 
-        # Custom logic for common excel queries to give precise professional answers instantly
+        # Smart automated formula and response generator logic
         if "vlookup" in query_lower:
           formula = (
               '=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])'
           )
-          explanation = "Yeh formula kisi table ya range mein aik value ko dhoondnay ke liye use hota hai."
+          explanation = "This formula is used to search for a value in the leftmost column of a table, and then return a value in the same row from a column you specify."
           example = '=VLOOKUP(A2, Sheet2!A:B, 2, FALSE)'
         elif "sumif" in query_lower:
           formula = '=SUMIF(range, criteria, [sum_range])'
-          explanation = (
-              "Yeh formula kisi khas condition ke tehet numbers ko plus karne"
-              " ke liye use hota hai."
-          )
+          explanation = "This formula adds all numbers in a range of cells that meet a single specified condition or criteria."
           example = '=SUMIF(A:A, "Apple", B:B)'
         elif "countif" in query_lower:
           formula = '=COUNTIF(range, criteria)'
-          explanation = "Yeh formula count karta hai ke aik range mein koi specific word ya number kitni da baar aaya hai."
+          explanation = "This formula counts the number of cells within a range that meet a single condition."
           example = '=COUNTIF(A:A, "Completed")'
         elif "if" in query_lower:
           formula = '=IF(logical_test, value_if_true, value_if_false)'
-          explanation = "Yeh conditional formula hai jo check karta hai ke condition sahi hai ya galat."
+          explanation = "This formula checks whether a condition is met, returning one value if TRUE and another if FALSE."
           example = '=IF(A2>50, "Pass", "Fail")'
         else:
           formula = (
-              f'-- Custom Solution for: {user_query} --\nUse standard Excel functions'
-              ' like INDEX/MATCH, XLOOKUP, or Pivot Tables depending on your'
-              ' data structure.'
+              f'-- Custom Solution for: {user_query} --\nUse standard Excel'
+              ' functions like INDEX/MATCH, XLOOKUP, or Pivot Tables based on'
+              ' your data.'
           )
-          explanation = "Aapke sawal ke mutabiq yeh behtareen Excel approach hai. Isay formulas ya data cleaning ke zariye hal kiya ja sakta hai."
-          example = 'Check data formatting and use uppercase/trim if necessary.'
+          explanation = "This is the best professional approach for your specific Excel requirement. Ensure your data is structured cleanly."
+          example = 'Check data formatting, remove leading spaces, and retry.'
 
         # Displaying Results cleanly
-        st.success("Solution Tayar Hai!")
+        st.success("Solution Generated Successfully!")
 
         st.subheader("📌 Recommended Formula:")
         st.code(formula, language="excel")
 
-        st.subheader("💡 Explanation (Kaise Kaam Karta Hai):")
+        st.subheader("💡 Explanation:")
         st.write(explanation)
 
-        st.subheader("📝 Example (Misal):")
+        st.subheader("📝 Example Usage:")
         st.code(example, language="excel")
 
         # Download solution text feature
@@ -85,4 +81,4 @@ if st.button("Generate Excel Solution 🚀"):
         )
 
       except Exception as e:
-        st.error(f"Koi error aa gaya: {e}")
+        st.error(f"An error occurred: {e}")
