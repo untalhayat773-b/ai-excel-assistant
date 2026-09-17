@@ -8,7 +8,7 @@ st.set_page_config(
 st.title("📊 AI Excel Formula & Assistant Tool")
 st.write(
     "Type your Excel problem below, or explore the complete formula reference"
-    " guide to get instant professional solutions!"
+    " directory with Math, Lookup, and Financial formulas!"
 )
 
 # Tabs for better UI/UX organization
@@ -19,7 +19,8 @@ with tab1:
   user_query = st.text_area(
       "What do you want to do in Excel?",
       placeholder=(
-          "e.g., Find duplicate values in column A, write a VLOOKUP formula..."
+          "e.g., Calculate average sales, write a VLOOKUP formula, or round"
+          " numbers..."
       ),
   )
 
@@ -37,35 +38,45 @@ with tab1:
                 '=VLOOKUP(lookup_value, table_array, col_index_num,'
                 ' [range_lookup])'
             )
-            explanation = "This formula is used to search for a value in the leftmost column of a table, and then return a value in the same row from a column you specify."
+            explanation = "Searches for a value in the leftmost column of a table, and returns a value in the same row from a specified column."
             example = '=VLOOKUP(A2, Sheet2!A:B, 2, FALSE)'
+          elif "xlookup" in query_lower:
+            formula = (
+                '=XLOOKUP(lookup_value, lookup_array, return_array,'
+                ' [if_not_found])'
+            )
+            explanation = "Searches a range or an array, and returns the item corresponding to the first match found."
+            example = '=XLOOKUP(E2, A:A, B:B, "Not Found")'
+          elif "sum" in query_lower and "if" not in query_lower:
+            formula = '=SUM(number1, [number2], ...)'
+            explanation = (
+                "Adds all the numbers in a range of cells automatically."
+            )
+            example = "=SUM(A1:A10)"
+          elif "average" in query_lower:
+            formula = '=AVERAGE(number1, [number2], ...)'
+            explanation = "Calculates the arithmetic mean of a given set of numbers."
+            example = "=AVERAGE(B1:B20)"
+          elif "round" in query_lower:
+            formula = '=ROUND(number, num_digits)'
+            explanation = "Rounds a number to a specified number of digits."
+            example = "=ROUND(A1, 2)"
           elif "sumif" in query_lower:
             formula = '=SUMIF(range, criteria, [sum_range])'
-            explanation = "This formula adds all numbers in a range of cells that meet a single specified condition or criteria."
+            explanation = "Adds numbers in a range that meet a single specific condition."
             example = '=SUMIF(A:A, "Apple", B:B)'
           elif "countif" in query_lower:
             formula = '=COUNTIF(range, criteria)'
-            explanation = "This formula counts the number of cells within a range that meet a single condition."
+            explanation = "Counts the number of cells within a range that meet a single condition."
             example = '=COUNTIF(A:A, "Completed")'
           elif "if" in query_lower:
             formula = '=IF(logical_test, value_if_true, value_if_false)'
-            explanation = "This formula checks whether a condition is met, returning one value if TRUE and another if FALSE."
+            explanation = "Performs a logical test and returns one value if TRUE, another if FALSE."
             example = '=IF(A2>50, "Pass", "Fail")'
-          elif "xlookup" in query_lower:
-            formula = (
-                '=XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found],'
-                ' [match_mode], [search_mode])'
-            )
-            explanation = "Searches a range or an array, and then returns the item corresponding to the first match it finds."
-            example = '=XLOOKUP(E2, A:A, B:B, "Not Found")'
-          elif "index" in query_lower or "match" in query_lower:
-            formula = '=INDEX(array, MATCH(lookup_value, lookup_array, [match_type]))'
-            explanation = "A powerful combination to look up values dynamically in any direction (left or right)."
-            example = '=INDEX(B:B, MATCH("Item1", A:A, 0))'
           else:
             formula = (
                 f'-- Custom Solution for: {user_query} --\nUse standard Excel'
-                ' functions like INDEX/MATCH, XLOOKUP, or Pivot Tables based on'
+                ' functions like SUM, AVERAGE, VLOOKUP, or Pivot Tables based on'
                 ' your data.'
             )
             explanation = "This is the best professional approach for your specific Excel requirement. Ensure your data is structured cleanly."
@@ -99,17 +110,35 @@ with tab1:
           st.error(f"An error occurred: {e}")
 
 with tab2:
-  st.subheader("📚 Complete Excel Formula Reference Directory")
+  st.subheader("📚 Complete Excel Formula & Math Directory")
   st.write(
-      "Explore key formulas, their standard sample questions, and exact"
-      " syntax."
+      "Explore core formulas including Math, Lookup, Logical, and Statistical"
+      " functions."
   )
 
   formulas_db = [
       {
+          "Category": "Math & Trig",
+          "Name": "SUM",
+          "Question": "How to add multiple numbers or cells together?",
+          "Syntax": "=SUM(number1, [number2], ...)",
+      },
+      {
+          "Category": "Math & Trig",
+          "Name": "AVERAGE",
+          "Question": "How to calculate the average of a range?",
+          "Syntax": "=AVERAGE(number1, [number2], ...)",
+      },
+      {
+          "Category": "Math & Trig",
+          "Name": "ROUND",
+          "Question": "How to round numbers to decimal places?",
+          "Syntax": "=ROUND(number, num_digits)",
+      },
+      {
           "Category": "Lookup & Reference",
           "Name": "VLOOKUP",
-          "Question": "How to find a value in a table columns?",
+          "Question": "How to find a value vertically in a table?",
           "Syntax": (
               "=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])"
           ),
