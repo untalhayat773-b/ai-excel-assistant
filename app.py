@@ -8,7 +8,7 @@ st.set_page_config(
 st.title("📊 AI Excel Formula & Assistant Tool")
 st.write(
     "Type your Excel problem below, or explore the complete formula reference"
-    " directory with Math, Lookup, and Financial formulas!"
+    " directory containing all major categories!"
 )
 
 # Tabs for better UI/UX organization
@@ -19,8 +19,8 @@ with tab1:
   user_query = st.text_area(
       "What do you want to do in Excel?",
       placeholder=(
-          "e.g., Calculate average sales, write a VLOOKUP formula, or round"
-          " numbers..."
+          "e.g., Calculate loan payment, find current date, write VLOOKUP, or"
+          " SUM..."
       ),
   )
 
@@ -73,11 +73,21 @@ with tab1:
             formula = '=IF(logical_test, value_if_true, value_if_false)'
             explanation = "Performs a logical test and returns one value if TRUE, another if FALSE."
             example = '=IF(A2>50, "Pass", "Fail")'
+          elif "pmt" in query_lower or "loan" in query_lower:
+            formula = "=PMT(rate, nper, pv, [fv], [type])"
+            explanation = "Calculates the payment for a loan based on constant payments and a constant interest rate."
+            example = "=PMT(0.05/12, 12, 10000)"
+          elif "today" in query_lower or "date" in query_lower:
+            formula = "=TODAY()"
+            explanation = (
+                "Returns the current system date formatted as a date."
+            )
+            example = "=TODAY()"
           else:
             formula = (
                 f'-- Custom Solution for: {user_query} --\nUse standard Excel'
-                ' functions like SUM, AVERAGE, VLOOKUP, or Pivot Tables based on'
-                ' your data.'
+                ' functions like SUM, AVERAGE, VLOOKUP, XLOOKUP, or PMT based'
+                ' on your data.'
             )
             explanation = "This is the best professional approach for your specific Excel requirement. Ensure your data is structured cleanly."
             example = 'Check data formatting, remove leading spaces, and retry.'
@@ -110,10 +120,10 @@ with tab1:
           st.error(f"An error occurred: {e}")
 
 with tab2:
-  st.subheader("📚 Complete Excel Formula & Math Directory")
+  st.subheader("📚 Complete Excel Formula & Master Directory")
   st.write(
-      "Explore core formulas including Math, Lookup, Logical, and Statistical"
-      " functions."
+      "Explore comprehensive formulas across Math, Lookup, Logical,"
+      " Statistical, Financial, and Date & Time categories."
   )
 
   formulas_db = [
@@ -169,6 +179,18 @@ with tab2:
           "Name": "COUNTIF",
           "Question": "How to count cells matching a specific condition?",
           "Syntax": '=COUNTIF(range, criteria)',
+      },
+      {
+          "Category": "Financial",
+          "Name": "PMT",
+          "Question": "How to calculate loan payments / installments?",
+          "Syntax": "=PMT(rate, nper, pv, [fv], [type])",
+      },
+      {
+          "Category": "Date & Time",
+          "Name": "TODAY",
+          "Question": "How to insert the current date automatically?",
+          "Syntax": "=TODAY()",
       },
   ]
 
