@@ -5,6 +5,30 @@ st.set_page_config(
     page_title="AI Excel Formula Assistant", page_icon="📊", layout="centered"
 )
 
+# --- SIDEBAR: Lemon Squeezy Subscription ---
+st.sidebar.title("⭐ Go Pro / Premium")
+st.sidebar.write(
+    "Unlock advanced AI formulas, unlimited queries, and priority support for"
+    " just $5!"
+)
+
+# Integrated Lemon Squeezy Checkout URL
+lemon_squeezy_checkout_url = (
+    "https://aiworkspace.lemonsqueezy.com/checkout/buy/8ae9f56d-9fe0-48f1-a1b5-c981656ecd90"
+)
+
+st.sidebar.markdown(
+    f"""
+    <a href="{lemon_squeezy_checkout_url}" target="_blank">
+        <button style="background-color:#FF4B4B; color:white; padding:10px 20px; border:none; border-radius:5px; font-weight:bold; cursor:pointer; width:100%;">
+            Subscribe for $5 🚀
+        </button>
+    </a>
+""",
+    unsafe_allow_html=True,
+)
+
+# Main App Interface
 st.title("📊 AI Excel Formula & Assistant Tool")
 st.write(
     "Type your Excel problem below, or explore the complete formula reference"
